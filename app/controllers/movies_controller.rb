@@ -8,12 +8,13 @@ class MoviesController < ApplicationController
 
   def index
     sorting = params[:sort]
-    if sorting = "title"
-      @movies = Movie.all
-    end
-    if sorting = "release_date"
-      @movies = nil
-    end
+    @movies = Movie.all
+    #if sorting == "title"
+    #  @movies = Movie.all
+    #end
+    #if sorting == "release_date"
+    #  @movies = nil
+    #end
   end
 
   def new
