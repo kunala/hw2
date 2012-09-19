@@ -9,10 +9,13 @@ class MoviesController < ApplicationController
   def index
     @sort = params[:sort]
     puts @sort=='title'
-    @movies = Movie.all
-    #if sorting == "title"
-    #  @movies = Movie.all
-    #end
+    if @sort == "title"
+      @movies = Movie.order('title ASC')
+    elsif @sort == 'release'
+      @movies = Movie.order('release_date ASC')
+    else
+      @movies = Movie.all
+    end
     #if sorting == "release_date"
     #  @movies = nil
     #end
