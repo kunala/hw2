@@ -7,19 +7,40 @@ class MoviesController < ApplicationController
   end
 
   def index
+
     @sort = params[:sort]
-    puts @sort=='title'
-    if @sort == "title"
-      @movies = Movie.order('title ASC')
-    elsif @sort == 'release_date'
-      @movies = Movie.order('release_date ASC')
+      
+    @ratings = {}
+    if params[:ratings]
+      @ratings[:ratings] = params[:ratings]
+      @filter = params[:ratings].keys
+      filters = {:rating => @filter}
     else
-      @movies = Movie.all
+      @filter = {}
     end
     
+    if (filters == nil) && (@sort == nil) && session[:params]
+      redirect_to movies_path(session[:params])
+    end
+  
+    
+    #if @sort == "title"
+    #  @movies = Movie.order('title ASC')
+    #elsif @sort == 'release_date'
+    #  @movies = Movie.order('release_date ASC')
+    #else
+    #  @movies = Movie.all
+    #end
+    
+    #puts "open"
+    #puts session[:ratings]
+    #puts "closed"
+    
+    
     @all_ratings = Movie.all(:select => 'DISTINCT rating').collect{|x| x.rating}
-    @ratings = {}
-    @movies = Movie.all(:order => true, :conditions => {:rating => @ratings.keys})
+    @movies = Movie.where(filters).order(@sort)
+    
+    session[:params] = @ratings.merge({:sort => @sort})
    
   end
 
