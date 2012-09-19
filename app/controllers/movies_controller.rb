@@ -11,14 +11,16 @@ class MoviesController < ApplicationController
     puts @sort=='title'
     if @sort == "title"
       @movies = Movie.order('title ASC')
-    elsif @sort == 'release'
+    elsif @sort == 'release_date'
       @movies = Movie.order('release_date ASC')
     else
       @movies = Movie.all
     end
-    #if sorting == "release_date"
-    #  @movies = nil
-    #end
+    
+    @all_ratings = Movie.all(:select => 'DISTINCT rating').collect{|x| x.rating}
+    @ratings = {}
+    @movies = Movie.all(:order => true, :conditions => {:rating => @ratings.keys})
+   
   end
 
   def new
