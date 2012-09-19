@@ -7,7 +7,8 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sorting = params[:sort]
+    @sort = params[:sort]
+    puts @sort=='title'
     @movies = Movie.all
     #if sorting == "title"
     #  @movies = Movie.all
