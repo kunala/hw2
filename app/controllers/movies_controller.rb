@@ -32,10 +32,11 @@ class MoviesController < ApplicationController
     
     
     if @sort != params[:sort_on] && @ratings != params[:ratings]
+      flash.keep
       redirect_to movies_path(:sort => @sort, :ratings =>@ratings)
     end
     
-    @ratings or @ratings = {}
+   # @ratings or @ratings = {}
     
     @all_ratings = Movie.all(:select => 'DISTINCT rating').collect{|x| x.rating}
     
