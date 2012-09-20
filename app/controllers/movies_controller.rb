@@ -24,19 +24,30 @@ class MoviesController < ApplicationController
     @sort = session[:sort]
     
     #handle ratings checks
-    puts session[:ratings]
     if params[:ratings] #or params[:commit]
       session[:ratings] = params[:ratings]
     end
-    puts session[:ratings]
+    #puts session[:ratings]
     
     @ratings = session[:ratings]
     
+    puts "hello"
     
-    if ((@sort != params[:sort_on]) and (@ratings != params[:ratings]))
+    puts @sort
+    puts "hello"
+    puts params[:sort]
+    puts "hello"
+    puts @ratings
+    puts "hello"
+    puts @ratings != params[:ratings]
+    
+    if ((@sort != params[:sort]) || (@ratings != params[:ratings]))
+      puts "this took"
       flash.keep
       redirect_to movies_path(:sort => @sort, :ratings =>@ratings)
     end
+    
+    
     
     @ratings or @ratings = {}
     
